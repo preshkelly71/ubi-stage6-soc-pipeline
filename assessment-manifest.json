@@ -12,7 +12,7 @@
     "provision": "pip install -r requirements.txt",
     "test": "pytest tests/ -v --tb=short"
   },
-  "commit": "git clone https://github.com/preshkelly71/ubi-stage6-soc-pipeline.git",
+  "commit": 1f2bcfdede01b63ecb0f7a57fe75c2dd6f07e212,
   "inputs": [
     "replay/raw/honeypot-replay.jsonl"
   ],
