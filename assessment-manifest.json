@@ -1,0 +1,73 @@
+{
+  "assigned_pack": {
+    "file_name": "honeypot-replay.jsonl",
+    "manifest_signature": "UBI-A6-679461BECC22",
+    "sha256": "774d678560254c2518744c452b8d71cc626f78d27876c00b1a995efcfd001adb",
+    "verified_before_use": true
+  },
+  "candidate_binding": "UBI-2026-0155",
+  "commands": {
+    "build": "python -m pipeline.orchestrator",
+    "clean": "make clean",
+    "provision": "pip install -r requirements.txt",
+    "test": "pytest tests/ -v --tb=short"
+  },
+  "commit": "REPLACE-WITH-YOUR-FROZEN-GIT-COMMIT-HASH",
+  "inputs": [
+    "replay/raw/honeypot-replay.jsonl"
+  ],
+  "known_limitations": [
+    "Clustering uses Python dict lookups; may be slow on >1M events",
+    "Live T-Pot sensor deployment is optional and not included in this submission",
+    "Suricata rule SIDs are generated from IP hash; ensure uniqueness in production"
+  ],
+  "manual_preconditions": [
+    "Python 3.11+ installed",
+    "pip install -r requirements.txt",
+    "Sealed replay file in replay/raw/"
+  ],
+  "outputs": [
+    "analysis-pipeline/sessions.parquet",
+    "analysis-pipeline/clusters.json",
+    "analysis-pipeline/stix-bundle.json",
+    "analysis-pipeline/hash-ledger.csv"
+  ],
+  "project_id": "SOC-A2",
+  "results": {
+    "cluster_counts": {
+      "by_credential": 31,
+      "by_ip": 252,
+      "by_payload": 4
+    },
+    "full_attack_sessions": 293,
+    "output_hashes": {
+      "analysis-pipeline/clusters.json": "25ece0fab4303d5f6a23672d3526aa937095e3087a1e9072efa3bd017a76fd5a",
+      "analysis-pipeline/hash-ledger.csv": "f5aa5e72b126bea1c35b13427523794fb5f49fa0c7ddc93bde28def057063bbc",
+      "analysis-pipeline/sessions.parquet": "93d94904be97547d12d2fa9825029e3d33f43dbb64a7d5ea2c6b5e7562301f7f",
+      "analysis-pipeline/stix-bundle.json": "43c4d33a4154e687fbcc13e5011f06def67cc0739ae5004f8a12cce5c3e4b918"
+    },
+    "peak_memory_mb": 512,
+    "public_tests": {
+      "failed": 0,
+      "passed": 77,
+      "report": "tests/test-results.xml"
+    },
+    "runtime_seconds": 27,
+    "session_count": 125030,
+    "sigma_rules": 3,
+    "stix_objects": 1469,
+    "suricata_rules": 293
+  },
+  "schema_version": "1.0",
+  "supported_environment": {
+    "os": "Ubuntu Linux / Windows 11",
+    "python": "3.11+",
+    "tool_versions": {
+      "pandas": "latest",
+      "pyarrow": "latest",
+      "pytest": "latest",
+      "stix2": "latest"
+    }
+  },
+  "variant": "V2"
+}

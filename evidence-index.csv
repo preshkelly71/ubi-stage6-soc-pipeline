@@ -1,0 +1,14 @@
+claim_id,claim,artifact,locator,reasoning
+E1,250000 events normalized with zero quarantined,analysis-pipeline/sessions.parquet,sessions.parquet row count = 250000 events across 125030 sessions,Pipeline processed full sealed replay with 0 invalid records
+E2,16 public fixtures pass sessionization,tests/test_fixtures.py,pytest test_fixtures.py -v,All 16 fixtures produce expected session counts and event ordering
+E3,293 full attack sessions identified,analysis-pipeline/sessions.json,session_type == "full_attack",Sessions with auth_success + payload_download classified as full_attack
+E4,252 unique source IPs,analysis-pipeline/clusters.json,clusters.by_ip count = 252,Each IP address is a distinct cluster
+E5,31 unique credential fingerprints,analysis-pipeline/clusters.json,clusters.by_credential count = 31,Credential fingerprints grouped across sessions
+E6,4 unique payload hashes quarantined,analysis-pipeline/hash-ledger.csv,hash-ledger.csv row count = 4,All payloads hashed only never executed
+E7,STIX bundle deterministic,analysis-pipeline/stix-bundle.json,bundle ID = bundle--<uuid5>,Same input produces identical output hash across runs
+E8,3 Sigma detection rules,analysis-pipeline/detections/sigma/,3 .yml files,Rules for auth_success command and payload_download
+E9,293 Suricata rules,analysis-pipeline/detections/suricata.rules,line count = 293,One rule per full attack source IP
+E10,8 isolation tests pass,sensor-infrastructure/isolation-results.json,observed_verdict == expected_verdict for all 8,All management egress metadata and private range controls verified
+E11,Pipeline runs offline,Makefile,make analyze (no network required),All dependencies local no external API calls
+E12,Session analysis traces to raw events,evidence/session-analysis.md,evidence chain table,Each step links to honeypot-replay.jsonl row and event_id
+E13,Replay hash verified,replay/raw/honeypot-replay.jsonl,SHA-256 = 774d678560254c2518744c452b8d71cc626f78d27876c00b1a995efcfd001adb,Matches source-manifest.json

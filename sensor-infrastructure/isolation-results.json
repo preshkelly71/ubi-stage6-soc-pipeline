@@ -1,0 +1,97 @@
+{
+  "assignment_variant": "V2",
+  "evidence_marker": "UBI-A6-679461BECC22",
+  "intern_code": "UBI-2026-0155",
+  "boundary_source": "lab-source/site.yml",
+  "firewall_template": "lab-source/templates/nftables.conf.j2",
+  "viewpoints": [
+    {
+      "test_id": "ISO-01",
+      "description": "SSH management from declared source",
+      "source": "management",
+      "destination_port": 22,
+      "expected_verdict": "allow",
+      "observed_verdict": "allow",
+      "evidence_locator": "nftables.conf.j2 line: tcp dport 22 ip saddr $MGMT_SOURCE accept",
+      "rationale": "SSH restricted to declared management IP range via nftables saddr filter"
+    },
+    {
+      "test_id": "ISO-02",
+      "description": "SSH management from undeclared source",
+      "source": "external",
+      "destination_port": 22,
+      "expected_verdict": "deny",
+      "observed_verdict": "deny",
+      "evidence_locator": "nftables.conf.j2 line: tcp dport 22 drop (default policy)",
+      "rationale": "Default drop policy for non-management sources"
+    },
+    {
+      "test_id": "ISO-03",
+      "description": "Honeypot ingress on declared ports",
+      "source": "external",
+      "destination_port": "22,23,80,1883",
+      "expected_verdict": "allow",
+      "observed_verdict": "allow",
+      "evidence_locator": "nftables.conf.j2 line: tcp dport {22,23,80,1883} accept",
+      "rationale": "Honeypot services exposed on declared ports for attack capture"
+    },
+    {
+      "test_id": "ISO-04",
+      "description": "Egress to RFC1918 private ranges",
+      "source": "sensor",
+      "destination": "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16",
+      "expected_verdict": "deny",
+      "observed_verdict": "deny",
+      "evidence_locator": "nftables.conf.j2 line: ip daddr {10.0.0.0/8,172.16.0.0/12,192.168.0.0/16} drop",
+      "rationale": "Prevents sensor from being used as pivot to internal networks"
+    },
+    {
+      "test_id": "ISO-05",
+      "description": "Egress to cloud metadata endpoint 169.254.169.254",
+      "source": "sensor",
+      "destination": "169.254.169.254",
+      "expected_verdict": "deny",
+      "observed_verdict": "deny",
+      "evidence_locator": "nftables.conf.j2 line: ip daddr 169.254.169.254 drop",
+      "rationale": "Prevents metadata service abuse for credential theft"
+    },
+    {
+      "test_id": "ISO-06",
+      "description": "General outbound egress (non-management)",
+      "source": "sensor",
+      "destination": "0.0.0.0/0",
+      "expected_verdict": "deny",
+      "observed_verdict": "deny",
+      "evidence_locator": "nftables.conf.j2 line: default policy drop for output chain",
+      "rationale": "Sensor isolated; only management and declared honeypot ports allowed"
+    },
+    {
+      "test_id": "ISO-07",
+      "description": "Honeypot service isolation from management plane",
+      "source": "sensor",
+      "destination_port": 22,
+      "expected_verdict": "deny",
+      "observed_verdict": "deny",
+      "evidence_locator": "nftables.conf.j2 line: sensor cannot reach management port 22",
+      "rationale": "Compromised honeypot cannot reach management services"
+    },
+    {
+      "test_id": "ISO-08",
+      "description": "Docker container egress to host network",
+      "source": "sensor",
+      "destination": "172.17.0.0/16",
+      "expected_verdict": "deny",
+      "observed_verdict": "deny",
+      "evidence_locator": "nftables.conf.j2 line: ip daddr 172.17.0.0/16 drop",
+      "rationale": "Container isolation from host and other container networks"
+    }
+  ],
+  "summary": {
+    "total_tests": 8,
+    "all_pass": true,
+    "management_restricted": true,
+    "egress_blocked": true,
+    "metadata_blocked": true,
+    "private_ranges_blocked": true
+  }
+}

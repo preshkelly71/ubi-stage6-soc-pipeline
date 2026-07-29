@@ -1,0 +1,18 @@
+title: Honeypot Command Execution
+id: ubi-soc-stage6-command-exec
+status: experimental
+description: Detects command execution on honeypot services after successful auth
+author: UBI SOC Stage 6 Pipeline
+date: 2026-07-29
+tags:
+  - attack.execution
+  - attack.t1059
+logsource:
+  product: honeypot
+detection:
+  selection:
+    action: command
+  condition: selection
+falsepositives:
+  - Legitimate security testing
+level: critical

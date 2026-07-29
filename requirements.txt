@@ -1,0 +1,7 @@
+pyarrow
+stix2
+pytest
+pytest-cov
+tabulate
+python-dateutil
+pandas

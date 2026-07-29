@@ -1,0 +1,18 @@
+title: Honeypot Successful Authentication
+id: ubi-soc-stage6-auth-success
+status: experimental
+description: Detects successful authentication on honeypot services
+author: UBI SOC Stage 6 Pipeline
+date: 2026-07-29
+tags:
+  - attack.initial_access
+  - attack.t1110
+logsource:
+  product: honeypot
+detection:
+  selection:
+    action: auth_success
+  condition: selection
+falsepositives:
+  - Legitimate security testing
+level: high
