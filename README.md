@@ -2,7 +2,31 @@
 
 ## Overview
 
-Repository:https://github.com/preshkelly71/ubi-stage6-soc-pipeline
+# UBI Stage 6 Project 2: Deception Sensor and Analysis Pipeline
+
+Repository: https://github.com/preshkelly71/ubi-stage6-soc-pipeline
+
+## Quick start (clone and run from scratch)
+
+1. Clone:
+git clone https://github.com/preshkelly71/ubi-stage6-soc-pipeline.git
+cd ubi-stage6-soc-pipeline
+
+2. Install:
+pip install -r requirements.txt
+
+3. Copy sealed replay (NOT in repo — restricted):
+mkdir replay\raw
+copy "path\to\honeypot-replay.jsonl" replay\raw\
+
+4. Run tests:
+python -m pytest tests/ -v
+
+5. Run pipeline (entry point is pipeline.main):
+python -m pipeline.main
+
+Note: Running python -m pipeline.orchestrator does nothing. Always use python -m pipeline.main
+
 
 This project implements a production-style deception sensor (honeypot) boundary
 and analysis pipeline for the Ubuntu Bridge Initiative (UBI) Stage 6 Advanced
@@ -18,21 +42,7 @@ intelligence bundles, and emits Sigma + Suricata detection rules.
 - Evidence marker: UBI-A6-679461BECC22
 - Deadline: August 4, 2026, 18:00 WAT
 
-## Quick start
 
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Run tests
-pytest tests/ -v
-
-# Run the full pipeline
-make analyze
-
-# Or run directly
-python -m pipeline.orchestrator
-```
 
 ## Pipeline architecture
 
