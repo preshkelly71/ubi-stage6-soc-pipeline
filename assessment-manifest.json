@@ -12,7 +12,7 @@
     "provision": "pip install -r requirements.txt",
     "test": "pytest tests/ -v --tb=short"
   },
-  "commit": 1f2bcfdede01b63ecb0f7a57fe75c2dd6f07e212,
+  "commit": "91e578b9811c681d4c75f57f2970b0dda38784fb",
   "inputs": [
     "replay/raw/honeypot-replay.jsonl"
   ],
