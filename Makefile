@@ -12,7 +12,7 @@ fixtures:
 	pytest tests/test_fixtures.py -v
 
 analyze:
-	python -m pipeline.orchestrator
+	python -m pipeline.main
 
 clean:
 	rm -f analysis-pipeline/sessions.parquet

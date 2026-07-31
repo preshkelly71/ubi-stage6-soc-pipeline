@@ -1,5 +1,3 @@
-# UBI Stage 6 Project 2: Deception Sensor and Analysis Pipeline
-
 ## Overview
 
 # UBI Stage 6 Project 2: Deception Sensor and Analysis Pipeline
