@@ -7,12 +7,12 @@
   },
   "candidate_binding": "UBI-2026-0155",
   "commands": {
-    "build": "python -m pipeline.orchestrator",
+    "build": "python -m pipeline.main",
     "clean": "make clean",
     "provision": "pip install -r requirements.txt",
     "test": "pytest tests/ -v --tb=short"
   },
-  "commit": "91e578b9811c681d4c75f57f2970b0dda38784fb",
+  "commit": "30b099d1d96990ea1424981cf2ee942d5fe7d8fa",
   "inputs": [
     "replay/raw/honeypot-replay.jsonl"
   ],
